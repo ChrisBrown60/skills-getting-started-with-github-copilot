@@ -52,7 +52,11 @@ def test_signup_for_activity_normalizes_email_before_duplicate_check():
 
     assert second_response.status_code == 400
     assert second_response.json() == {"detail": "Student is already signed up"}
-    assert activities["Chess Club"]["participants"].count("new.student@mergington.edu") == 1
+    participants = activities["Chess Club"]["participants"]
+
+    assert participants.count("new.student@mergington.edu") == 1
+    assert first_email not in participants
+    assert all(participant == participant.strip().lower() for participant in participants)
 
 
 def test_signup_for_activity_rejects_when_activity_is_full():
