@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "accelerate-with-copilot"
+      - "copilot/**"
     paths:
       - "src/app.py"
 
