@@ -76,7 +76,7 @@ Your backend still has zero test coverage. Use **Plan Agent** to create a plan, 
 
    > 🪧 **Note:** Agent Mode may complete this in one pass, or it may need follow-up prompts from you.
 
-1. **Commit** and **push** all your changes to the `accelerate-with-copilot` branch.
+1. **Commit** and **push** all your changes to the `accelerate-with-copilot` branch, or to your `copilot/*` task branch if you're working with Copilot agent mode.
 
 1. Wait for Mona to check your work and share the next step.
 
