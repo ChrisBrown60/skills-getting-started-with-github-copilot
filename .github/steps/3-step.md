@@ -138,6 +138,6 @@ If you don't get the desired results, you can try other models or provide follow
 
    If you like the results, press the **Keep** button. If not, try providing Copilot some feedback.
 
-1. **Commit** and **push** all your changes to the `accelerate-with-copilot` branch.
+1. **Commit** and **push** all your changes to the `accelerate-with-copilot` branch, or to your `copilot/*` task branch if you're working with Copilot agent mode.
 
 1. Wait for Mona to check your work and share the next step.

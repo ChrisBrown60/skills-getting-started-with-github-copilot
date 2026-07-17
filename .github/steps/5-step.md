@@ -24,7 +24,7 @@ Both **Copilot pull request summaries** and **Copilot code review** have limited
 1. You might notice a **notification banner** suggesting to create a new pull request. Click that or use the **Pull Requests** tab at the top to **create a new pull request**. Please use the following details:
 
    - **base:** `main`
-   - **compare:** `accelerate-with-copilot`
+   - **compare:** `accelerate-with-copilot` (or your `copilot/*` task branch if you're working with Copilot agent mode)
    - **title:** `Improve student activity registration system`
 
 1. (Optional) In the PR description toolbar click the **Copilot** icon and **Summary** action. After a moment, Copilot will add a description based on your changes. :memo:
