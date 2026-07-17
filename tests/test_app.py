@@ -1,6 +1,7 @@
 """Tests for the Mergington High School Activities API."""
 
 import pytest
+from urllib.parse import quote
 from fastapi.testclient import TestClient
 from src.app import app, activities
 
@@ -54,7 +55,7 @@ class TestSignupForActivity:
         email = "newstudent@mergington.edu"
 
         # Act
-        response = client.post(f"/activities/{activity_name}/signup?email={email}")
+        response = client.post(f"/activities/{quote(activity_name, safe='')}/signup", params={"email": email})
         data = response.json()
 
         # Assert
@@ -67,7 +68,7 @@ class TestSignupForActivity:
         email = "newstudent@mergington.edu"
 
         # Act
-        client.post(f"/activities/{activity_name}/signup?email={email}")
+        client.post(f"/activities/{quote(activity_name, safe='')}/signup", params={"email": email})
 
         # Assert
         assert email in activities[activity_name]["participants"]
@@ -78,7 +79,7 @@ class TestSignupForActivity:
         email = "student@mergington.edu"
 
         # Act
-        response = client.post(f"/activities/{activity_name}/signup?email={email}")
+        response = client.post(f"/activities/{quote(activity_name, safe='')}/signup", params={"email": email})
 
         # Assert
         assert response.status_code == 404
@@ -87,10 +88,10 @@ class TestSignupForActivity:
         # Arrange
         activity_name = "Chess Club"
         email = "duplicate@mergington.edu"
-        client.post(f"/activities/{activity_name}/signup?email={email}")
+        client.post(f"/activities/{quote(activity_name, safe='')}/signup", params={"email": email})
 
         # Act
-        response = client.post(f"/activities/{activity_name}/signup?email={email}")
+        response = client.post(f"/activities/{quote(activity_name, safe='')}/signup", params={"email": email})
 
         # Assert
         assert response.status_code == 400
@@ -103,7 +104,7 @@ class TestUnregisterFromActivity:
         email = "michael@mergington.edu"
 
         # Act
-        response = client.delete(f"/activities/{activity_name}/unregister?email={email}")
+        response = client.delete(f"/activities/{quote(activity_name, safe='')}/unregister", params={"email": email})
         data = response.json()
 
         # Assert
@@ -116,7 +117,7 @@ class TestUnregisterFromActivity:
         email = "michael@mergington.edu"
 
         # Act
-        client.delete(f"/activities/{activity_name}/unregister?email={email}")
+        client.delete(f"/activities/{quote(activity_name, safe='')}/unregister", params={"email": email})
 
         # Assert
         assert email not in activities[activity_name]["participants"]
@@ -127,7 +128,7 @@ class TestUnregisterFromActivity:
         email = "student@mergington.edu"
 
         # Act
-        response = client.delete(f"/activities/{activity_name}/unregister?email={email}")
+        response = client.delete(f"/activities/{quote(activity_name, safe='')}/unregister", params={"email": email})
 
         # Assert
         assert response.status_code == 404
@@ -138,7 +139,7 @@ class TestUnregisterFromActivity:
         email = "notenrolled@mergington.edu"
 
         # Act
-        response = client.delete(f"/activities/{activity_name}/unregister?email={email}")
+        response = client.delete(f"/activities/{quote(activity_name, safe='')}/unregister", params={"email": email})
 
         # Assert
         assert response.status_code == 400

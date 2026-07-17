@@ -4,6 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
@@ -24,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const participantsList = details.participants.length > 0
           ? details.participants.map(p => `
               <li class="participant-item">
-                <span>${p}</span>
-                <button class="unregister-btn" data-activity="${name}" data-email="${p}" title="Unregister">&#x2715;</button>
+                <span>${escapeHtml(p)}</span>
+                <button class="unregister-btn" data-activity="${escapeHtml(name)}" data-email="${escapeHtml(p)}" title="Unregister">&#x2715;</button>
               </li>`).join("")
           : "<li class='no-participants'>No participants yet</li>";
 
@@ -80,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showMessage(text, type) {
     messageDiv.textContent = text;
-    messageDiv.className = type;
+    messageDiv.className = `message ${type}`;
     messageDiv.classList.remove("hidden");
     setTimeout(() => {
       messageDiv.classList.add("hidden");
