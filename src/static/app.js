@@ -31,11 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const spotsLeft = details.max_participants - details.participants.length;
 
         const participantsList = details.participants.length > 0
-          ? details.participants.map(p => `
-              <li class="participant-item">
-                <span>${escapeHtml(p)}</span>
-                <button class="unregister-btn" data-activity="${escapeHtml(name)}" data-email="${escapeHtml(p)}" title="Unregister">&#x2715;</button>
-              </li>`).join("")
+          ? details.participants.map((participant) => `<li class="participant-item">${escapeHtml(participant)}</li>`).join("")
           : "<li class='no-participants'>No participants yet</li>";
 
         activityCard.innerHTML = `
@@ -58,29 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
         activitySelect.appendChild(option);
       });
 
-      // Attach unregister button listeners
-      document.querySelectorAll(".unregister-btn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const activity = btn.dataset.activity;
-          const email = btn.dataset.email;
-          try {
-            const response = await fetch(
-              `/activities/${encodeURIComponent(activity)}/unregister?email=${encodeURIComponent(email)}`,
-              { method: "DELETE" }
-            );
-            const result = await response.json();
-            if (response.ok) {
-              showMessage(result.message, "success");
-              fetchActivities();
-            } else {
-              showMessage(result.detail || "An error occurred", "error");
-            }
-          } catch (error) {
-            showMessage("Failed to unregister. Please try again.", "error");
-            console.error("Error unregistering:", error);
-          }
-        });
-      });
     } catch (error) {
       activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
       console.error("Error fetching activities:", error);
