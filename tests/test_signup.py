@@ -18,18 +18,21 @@ client = TestClient(app)
 
 
 def test_signup_for_activity_rejects_duplicate_student():
-    email = "michael@mergington.edu"
+    email = "new.student@mergington.edu"
 
-    response = client.post("/activities/Chess Club/signup", params={"email": email})
+    first_response = client.post("/activities/Chess%20Club/signup", params={"email": email})
+    assert first_response.status_code == 200
 
-    assert response.status_code == 400
-    assert response.json() == {"detail": "Student is already signed up"}
+    second_response = client.post("/activities/Chess%20Club/signup", params={"email": email})
+
+    assert second_response.status_code == 400
+    assert second_response.json() == {"detail": "Student is already signed up"}
 
 
 def test_signup_for_activity_adds_new_student():
     email = "new.student@mergington.edu"
 
-    response = client.post("/activities/Chess Club/signup", params={"email": email})
+    response = client.post("/activities/Chess%20Club/signup", params={"email": email})
 
     assert response.status_code == 200
     assert response.json() == {"message": f"Signed up {email} for Chess Club"}
